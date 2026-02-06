@@ -116,6 +116,46 @@
       margin: 10px 0;
     }
 
+    .followup {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(255, 59, 122, 0.15);
+      animation: pop .35s ease;
+    }
+
+    .followup h3 {
+      margin: 0 0 8px;
+      font-size: clamp(20px, 3.5vw, 28px);
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .choice {
+      position: static;
+      transform: none;
+      background: #ffe4ef;
+      color: #9f1239;
+      font-weight: 700;
+    }
+
+    .choice:hover {
+      background: #ffd1e2;
+    }
+
+    .answer {
+      margin-top: 12px;
+      font-size: 15px;
+      color: #7f1d3a;
+    }
+
     .fireworks {
       width: min(380px, 90vw);
       margin: 0 auto;
@@ -189,6 +229,12 @@
         alt="Fireworks"
       />
     </section>
+
+    <section class="followup" id="followup">
+      <h3 id="question">Where should we eat?</h3>
+      <p class="answer" id="answer"></p>
+      <div class="choices" id="choices"></div>
+    </section>
   </main>
 
   <script>
@@ -197,6 +243,10 @@
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
+    const followup = document.getElementById("followup");
+    const question = document.getElementById("question");
+    const choices = document.getElementById("choices");
+    const answer = document.getElementById("answer");
 
     /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
@@ -294,9 +344,51 @@
       zone.style.display = "none";
       hint.style.display = "none";     // HIDE THE HINT
       result.style.display = "block";
+      followup.style.display = "block";
       resizeConfettiCanvas();
       fullScreenConfetti();
     });
+
+    /* ---------- FOLLOW-UP QUESTIONS ---------- */
+    const questions = [
+      {
+        text: "Where should we eat?",
+        options: ["Sushi date", "Cozy pasta spot", "Hotpot night", "Dessert crawl"]
+      },
+      {
+        text: "When should we go?",
+        options: ["Friday night", "Saturday afternoon", "Sunday brunch", "Surprise me 💕"]
+      },
+      {
+        text: "Any extra wishes?",
+        options: ["Flowers 💐", "Handwritten note", "Photo booth", "Just you ❤️"]
+      }
+    ];
+
+    let currentQuestion = 0;
+
+    function renderQuestion() {
+      const item = questions[currentQuestion];
+      question.textContent = item.text;
+      choices.innerHTML = "";
+      item.options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice";
+        btn.textContent = option;
+        btn.addEventListener("click", () => {
+          answer.textContent = `Noted: ${option}`;
+          currentQuestion = (currentQuestion + 1) % questions.length;
+          setTimeout(() => {
+            answer.textContent = "";
+            renderQuestion();
+          }, 700);
+        });
+        choices.appendChild(btn);
+      });
+    }
+
+    renderQuestion();
   </script>
 </body>
 </html>
