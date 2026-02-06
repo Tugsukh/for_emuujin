@@ -70,7 +70,7 @@
       touch-action: none;
     }
 
-    button {
+    .button-zone button {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -122,6 +122,98 @@
       display: block;
     }
 
+    .planning-step {
+      display: none;
+      margin-top: 10px;
+      animation: pop .35s ease;
+    }
+
+    .planning-step h2 {
+      font-size: clamp(26px, 4.2vw, 36px);
+      margin-bottom: 6px;
+    }
+
+    .subtext {
+      margin: 0 0 18px;
+      font-size: 15px;
+      opacity: .75;
+    }
+
+    .question-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      text-align: left;
+    }
+
+    .question-card {
+      background: #ffffffd9;
+      padding: 14px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.08);
+    }
+
+    .question-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .choice-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .choice {
+      border: 1px solid #f3b5cb;
+      background: #fff5fa;
+      color: #4a132b;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+
+    .choice:hover {
+      transform: translateY(-1px);
+      border-color: #ff8fb4;
+      background: #ffe1ec;
+    }
+
+    .choice.selected {
+      background: #ff4d7d;
+      border-color: #ff4d7d;
+      color: #fff;
+    }
+
+    .summary {
+      margin-top: 18px;
+      text-align: left;
+      background: #fff7fb;
+      border-radius: 16px;
+      padding: 12px 16px;
+      border: 1px dashed #ff9fbf;
+    }
+
+    .summary h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
+    .summary ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .summary span.label {
+      font-weight: 700;
+      color: #8b1d41;
+    }
+
     @keyframes pop {
       from { transform: scale(.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
@@ -133,61 +225,120 @@
   <canvas id="confettiCanvas"></canvas>
 
   <main class="card">
-    <!-- ANIMAL WITH HEART -->
-    <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="fur" x1="0" x2="1">
-          <stop offset="0" stop-color="#f7c7a1"/>
-          <stop offset="1" stop-color="#f2a97b"/>
-        </linearGradient>
-        <linearGradient id="heart" x1="0" x2="1">
-          <stop offset="0" stop-color="#ff4d7d"/>
-          <stop offset="1" stop-color="#ff1f68"/>
-        </linearGradient>
-      </defs>
+    <section id="proposalStep">
+      <!-- ANIMAL WITH HEART -->
+      <svg class="art" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fur" x1="0" x2="1">
+            <stop offset="0" stop-color="#f7c7a1"/>
+            <stop offset="1" stop-color="#f2a97b"/>
+          </linearGradient>
+          <linearGradient id="heart" x1="0" x2="1">
+            <stop offset="0" stop-color="#ff4d7d"/>
+            <stop offset="1" stop-color="#ff1f68"/>
+          </linearGradient>
+        </defs>
 
-      <path d="M250 50 C250 33 270 25 282 38
-               C294 25 314 33 314 50
-               C314 78 282 92 282 106
-               C282 92 250 78 250 50Z"
-            fill="url(#heart)"/>
+        <path d="M250 50 C250 33 270 25 282 38
+                 C294 25 314 33 314 50
+                 C314 78 282 92 282 106
+                 C282 92 250 78 250 50Z"
+              fill="url(#heart)"/>
 
-      <path d="M90 120 C90 70 140 40 190 60
-               C240 40 290 70 290 120
-               C290 180 240 210 190 210
-               C140 210 90 180 90 120Z"
-            fill="url(#fur)"/>
+        <path d="M90 120 C90 70 140 40 190 60
+                 C240 40 290 70 290 120
+                 C290 180 240 210 190 210
+                 C140 210 90 180 90 120Z"
+              fill="url(#fur)"/>
 
-      <path d="M110 92 L95 55 L140 78 Z" fill="#f2a97b"/>
-      <path d="M270 92 L285 55 L240 78 Z" fill="#f2a97b"/>
+        <path d="M110 92 L95 55 L140 78 Z" fill="#f2a97b"/>
+        <path d="M270 92 L285 55 L240 78 Z" fill="#f2a97b"/>
 
-      <circle cx="160" cy="130" r="8"/>
-      <circle cx="220" cy="130" r="8"/>
+        <circle cx="160" cy="130" r="8"/>
+        <circle cx="220" cy="130" r="8"/>
 
-      <path d="M190 144 C186 144 182 148 182 152
-               C182 160 190 164 190 170
-               C190 164 198 160 198 152
-               C198 148 194 144 190 144Z"
-            fill="#ff7aa2"/>
-    </svg>
+        <path d="M190 144 C186 144 182 148 182 152
+                 C182 160 190 164 190 170
+                 C190 164 198 160 198 152
+                 C198 148 194 144 190 144Z"
+              fill="#ff7aa2"/>
+      </svg>
 
-    <h1>Emuujin, will you be my valentine?</h1>
+      <h1>Emuujin, will you be my valentine?</h1>
 
-    <section class="button-zone" id="zone">
-      <button id="yesBtn">Yes</button>
-      <button id="noBtn">No</button>
+      <section class="button-zone" id="zone">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+      </section>
+
+      <!-- HINT -->
+      <div class="hint" id="hint">“No” seems a bit shy 😈</div>
     </section>
 
-    <!-- HINT -->
-    <div class="hint" id="hint">“No” seems a bit shy 😈</div>
+    <section class="planning-step" id="planningStep">
+      <section class="result" id="result">
+        <h2>YAY! 🎉</h2>
+        <img
+          class="fireworks"
+          src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+          alt="Fireworks"
+        />
+      </section>
 
-    <section class="result" id="result">
-      <h2>YAY! 🎉</h2>
-      <img
-        class="fireworks"
-        src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
-        alt="Fireworks"
-      />
+      <h2>Let’s plan our date 💌</h2>
+      <p class="subtext">Pick your favorites and I’ll take care of the rest.</p>
+
+      <div class="question-grid">
+        <article class="question-card" data-question="food">
+          <h3>Where should we eat?</h3>
+          <div class="choice-group">
+            <button class="choice" data-choice="Sushi night">Sushi night</button>
+            <button class="choice" data-choice="Cozy café">Cozy café</button>
+            <button class="choice" data-choice="Hotpot">Hotpot</button>
+            <button class="choice" data-choice="Street food">Street food</button>
+          </div>
+        </article>
+
+        <article class="question-card" data-question="time">
+          <h3>What time should we meet?</h3>
+          <div class="choice-group">
+            <button class="choice" data-choice="Golden hour">Golden hour</button>
+            <button class="choice" data-choice="Sunset stroll">Sunset stroll</button>
+            <button class="choice" data-choice="After work">After work</button>
+            <button class="choice" data-choice="Late night">Late night</button>
+          </div>
+        </article>
+
+        <article class="question-card" data-question="vibe">
+          <h3>What vibe should it be?</h3>
+          <div class="choice-group">
+            <button class="choice" data-choice="Dressy & chic">Dressy & chic</button>
+            <button class="choice" data-choice="Soft & cozy">Soft & cozy</button>
+            <button class="choice" data-choice="Playful">Playful</button>
+            <button class="choice" data-choice="Adventure">Adventure</button>
+          </div>
+        </article>
+
+        <article class="question-card" data-question="dessert">
+          <h3>Dessert after?</h3>
+          <div class="choice-group">
+            <button class="choice" data-choice="Ice cream">Ice cream</button>
+            <button class="choice" data-choice="Boba">Boba</button>
+            <button class="choice" data-choice="Cheesecake">Cheesecake</button>
+            <button class="choice" data-choice="Surprise me">Surprise me</button>
+          </div>
+        </article>
+      </div>
+
+      <aside class="summary">
+        <h3>Your picks</h3>
+        <ul>
+          <li><span class="label">Food:</span> <span id="summary-food">Choose one ✨</span></li>
+          <li><span class="label">Time:</span> <span id="summary-time">Choose one ✨</span></li>
+          <li><span class="label">Vibe:</span> <span id="summary-vibe">Choose one ✨</span></li>
+          <li><span class="label">Dessert:</span> <span id="summary-dessert">Choose one ✨</span></li>
+        </ul>
+      </aside>
     </section>
   </main>
 
@@ -197,6 +348,15 @@
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
+    const proposalStep = document.getElementById("proposalStep");
+    const planningStep = document.getElementById("planningStep");
+
+    const summaryMap = {
+      food: document.getElementById("summary-food"),
+      time: document.getElementById("summary-time"),
+      vibe: document.getElementById("summary-vibe"),
+      dessert: document.getElementById("summary-dessert")
+    };
 
     /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
@@ -289,10 +449,24 @@
 
     noBtn.addEventListener("click", e => e.preventDefault());
 
+    document.querySelectorAll(".choice").forEach(choice => {
+      choice.addEventListener("click", () => {
+        const card = choice.closest(".question-card");
+        if (!card) return;
+        const key = card.dataset.question;
+        card.querySelectorAll(".choice").forEach(btn => btn.classList.remove("selected"));
+        choice.classList.add("selected");
+        const target = summaryMap[key];
+        if (target) {
+          target.textContent = choice.dataset.choice || choice.textContent.trim();
+        }
+      });
+    });
+
     /* ---------- YES CLICK ---------- */
     yesBtn.addEventListener("click", () => {
-      zone.style.display = "none";
-      hint.style.display = "none";     // HIDE THE HINT
+      proposalStep.style.display = "none";
+      planningStep.style.display = "block";
       result.style.display = "block";
       resizeConfettiCanvas();
       fullScreenConfetti();
